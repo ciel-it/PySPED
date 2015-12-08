@@ -1495,6 +1495,9 @@ class ICMSTot(nfe_200.ICMSTot):
     def __init__(self):
         super(ICMSTot, self).__init__()
         self.vICMSDeson = TagDecimal(nome='vICMSDeson', codigo='W04a', tamanho=[1, 15, 1], decimais=[1,  2,  2], raiz='//NFe/infNFe/total/ICMSTot')
+        self.vFCPUFDest = TagDecimal(nome='vFCPUFDest', codigo='W04b', tamanho=[1, 15, 1], decimais=[1,  2,  2], raiz='//NFe/infNFe/total/ICMSTot')
+        self.vICMSUFDest = TagDecimal(nome='vICMSUFDest', codigo='W04c', tamanho=[1, 15, 1], decimais=[1,  2,  2], raiz='//NFe/infNFe/total/ICMSTot')
+        self.vICMSUFRemet = TagDecimal(nome='vICMSUFRemet', codigo='W04d', tamanho=[1, 15, 1], decimais=[1,  2,  2], raiz='//NFe/infNFe/total/ICMSTot')
 
     def get_xml(self):
         xml = XMLNFe.get_xml(self)
@@ -1502,6 +1505,9 @@ class ICMSTot(nfe_200.ICMSTot):
         xml += self.vBC.xml
         xml += self.vICMS.xml
         xml += self.vICMSDeson.xml
+        xml += self.vFCPUFDest.xml
+        xml += self.vICMSUFDest.xml
+        xml += self.vICMSUFRemet.xml
         xml += self.vBCST.xml
         xml += self.vST.xml
         xml += self.vProd.xml
@@ -1522,7 +1528,10 @@ class ICMSTot(nfe_200.ICMSTot):
         if self._le_xml(arquivo):
             self.vBC.xml     = arquivo
             self.vICMS.xml   = arquivo
-            self.vICMSDeson.xml = arquivo
+            self.vICMSDeson.xml   = arquivo
+            self.vFCPUFDest.xml   = arquivo
+            self.vICMSUFDest.xml  = arquivo
+            self.vICMSUFRemet.xml = arquivo
             self.vBCST.xml   = arquivo
             self.vST.xml     = arquivo
             self.vProd.xml   = arquivo
