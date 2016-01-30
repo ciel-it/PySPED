@@ -676,8 +676,8 @@ class RemetenteRetrato(BandaDANFE):
         # Dados do remetente
         #
         img = Image()
-        img.top = 0.1*cm
-        img.left = 0.1*cm
+        img.top = -0.2*cm
+        img.left = 2*cm
         #
         # Tamanhos equilaventes, em centímetros, a 3,8 x 2,5, em 128 dpi
         # estranhamente, colocar os tamanhos em centímetros encolhe a imagem
@@ -690,32 +690,12 @@ class RemetenteRetrato(BandaDANFE):
         fld = Campo()
         fld.nome  = 'fld_rem_nome'
         fld.attribute_name = u'NFe.infNFe.emit.xNome.valor'
-        fld.top   = 0.2*cm
-        fld.left  = 4*cm
-        fld.width = 4*cm
-        fld.height = 1.4*cm
+        fld.top   = 2.0*cm
+        fld.left  = 0*cm
+        fld.width = 8*cm
+        fld.height = 1.1*cm
         fld.style = EMIT_NOME
         elements.append(fld)
-
-        fld = Campo()
-        fld.nome  = 'fld_rem_endereco_3'
-        fld.attribute_name = u'NFe.endereco_emitente_formatado_linha_3'
-        fld.top   = 2.05*cm
-        fld.left  = 4*cm
-        fld.width = 4*cm
-        fld.height = 0.45*cm
-        fld.style = EMIT_DADOS
-        elements.append(fld)
-
-#        fld = Campo()
-#        fld.nome  = 'fld_rem_endereco_4'
-#        fld.attribute_name = u'NFe.endereco_emitente_formatado_linha_4'
-#        fld.top   = 2.05*cm
-#        fld.left  = 4*cm
-#        fld.width = 4*cm
-#        fld.height = 0.45*cm
-#        fld.style = EMIT_DADOS
-#        elements.append(fld)
 
         fld = Campo()
         fld.nome  = 'fld_rem_endereco_1'
@@ -724,6 +704,16 @@ class RemetenteRetrato(BandaDANFE):
         fld.left  = 0*cm
         fld.width = 8*cm
         fld.height = 0.7*cm
+        fld.style = EMIT_DADOS
+        elements.append(fld)
+
+        fld = Campo()
+        fld.nome  = 'fld_rem_endereco_3'
+        fld.attribute_name = u'NFe.endereco_emitente_formatado_linha_3'
+        fld.top   = 2.85*cm
+        fld.left  = 0*cm
+        fld.width = 8*cm
+        fld.height = 0.45*cm
         fld.style = EMIT_DADOS
         elements.append(fld)
 
