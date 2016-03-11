@@ -95,7 +95,27 @@ class InfNFe(nfe_200.InfNFe):
         super(InfNFe, self).__init__()
         self.exporta  = Exporta()
 
+class InfNFeSupl(XMLNFe):
+    def __init__(self):
+        super(InfNFeSupl, self).__init__()
+        self.qrCode   = TagCaracter(nome='qrCode'  , codigo='ZX02', tamanho=[100,  600], raiz='//NFe/InfNFeSupl/qrCode', obrigatorio=False)        
 
+    def get_xml(self):
+        if not self.qrCode.valor:
+            return ''
+
+        xml = XMLNFe.get_xml(self)
+        xml += '<infNFeSupl>'
+        xml += '<qrCode><![CDATA[' + self.qrCode.valor + ']]></qrCode>'
+        xml += '</infNFeSupl>'
+        return xml
+
+    def set_xml(self, arquivo):
+        if self._le_xml(arquivo):
+            self.qrCode.xml = arquivo
+
+    xml = property(get_xml, set_xml)
+    
 class Deduc(nfe_200.Deduc):
     def __init__(self):
         super(Deduc, self).__init__()
@@ -1844,19 +1864,59 @@ class InfNFe(nfe_200.InfNFe):
     txt = property(get_txt)
 
 
+
 class NFe(nfe_200.NFe):
     def __init__(self):
         super(NFe, self).__init__()
         self.infNFe = InfNFe()
+        self.infNFeSupl = InfNFeSupl()
         self.Signature = Signature()
         self.caminho_esquema = os.path.join(DIRNAME, 'schema/', ESQUEMA_ATUAL + '/')
         self.arquivo_esquema = 'nfe_v3.10.xsd'
+
+    def get_xml(self):
+        xml = XMLNFe.get_xml(self)
+        xml += ABERTURA
+        xml += '<NFe xmlns="http://www.portalfiscal.inf.br/nfe">'
+        xml += self.infNFe.xml
+        xml += self.infNFeSupl.xml
+        #
+        # Define a URI a ser assinada
+        #
+        self.Signature.URI = '#' + self.infNFe.Id.valor
+
+        xml += self.Signature.xml
+        xml += '</NFe>'        
+        return xml
+
+    def set_xml(self, arquivo):
+        if self._le_xml(arquivo):
+            self.infNFe.xml    = arquivo
+            self.infNFeSupl.xml = arquivo
+            self.Signature.xml = self._le_noh('//NFe/sig:Signature')
+
+    xml = property(get_xml, set_xml)
+
+    def monta_url_qrcode(self, tokenCSC):
+        chave = unicode('https://www.sefaz.rs.gov.br/NFCE/NFCE-COM.aspx?chNFe=')
+        chave += unicode(self.chave)
+        chave += unicode('&nVersao=100')
+        chave += unicode('&tpAmb=%d' % self.infNFe.ide.tpAmb.valor)
+        #chave += '&cDest=99999999000191'         
+        chave += unicode('&dhEmi=%s' % self.infNFe.ide.dhEmi.txt.encode('hex'))
+        chave += unicode('&vNF=%s' % self.infNFe.total.ICMSTot.vNF.txt)
+        chave += unicode('&vICMS=%s' % self.infNFe.total.ICMSTot.vICMS.txt)
+        chave += unicode('&digVal=%s' % self.Signature.DigestValue.encode('hex'))
+        chave += unicode('&cIdToken=%s' % tokenCSC)
+        chave += '&cHashQRCode=ecc4f0e7e612456f2e3521768bd572b6f0eae240'
+        
+        return chave
 
     def monta_chave(self):
         chave = unicode(self.infNFe.ide.cUF.valor).strip().rjust(2, '0')
         chave += unicode(self.infNFe.ide.dhEmi.valor.strftime('%y%m')).strip().rjust(4, '0')
         chave += unicode(self.infNFe.emit.CNPJ.valor).strip().rjust(14, '0')
-        chave += '55'
+        chave += unicode(self.infNFe.ide.mod.valor)
         chave += unicode(self.infNFe.ide.serie.valor).strip().rjust(3, '0')
         chave += unicode(self.infNFe.ide.nNF.valor).strip().rjust(9, '0')
 

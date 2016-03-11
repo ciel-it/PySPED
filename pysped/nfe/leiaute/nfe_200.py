@@ -1184,7 +1184,8 @@ class Imposto(nfe_110.Imposto):
         # Enviar ICMS, IPI e II somente quando não for serviço
         if not self.ISSQN.cSitTrib.valor:
             xml += self.ICMS.xml
-            xml += self.IPI.xml
+            if self.IPI.cEnq.valor:
+                xml += self.IPI.xml
             xml += self.II.xml
 
         xml += self.PIS.xml

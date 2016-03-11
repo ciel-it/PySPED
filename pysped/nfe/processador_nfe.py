@@ -272,7 +272,13 @@ class ProcessadorNFe(object):
                 else:
                     ws_a_usar = webservices_3.ESTADO_WS[self.estado]
 
-                self._servidor = ws_a_usar[ambiente]['servidor']
+                if 'servidor%s' % servico in ws_a_usar[ambiente]:
+                    self._servidor = ws_a_usar[ambiente]['servidor%s' % servico]
+                elif self.modelo == '65' and 'servidor-nfce' in ws_a_usar[ambiente]:
+                    self._servidor = ws_a_usar[ambiente]['servidor-nfce']
+                else:
+                    self._servidor = ws_a_usar[ambiente]['servidor']
+                
                 self._url      = ws_a_usar[ambiente][servico]                
                 
                 if self.estado == 'RS' and servico == WS_NFE_CONSULTA_CADASTRO:
@@ -374,11 +380,14 @@ class ProcessadorNFe(object):
 
         if self.ambiente == 2: # Homologação tem detalhes especificos desde a NT2011_002
             for nfe in lista_nfes:
-                nfe.infNFe.dest.CNPJ.valor = '99999999000191'
-                nfe.infNFe.dest.xNome.valor = 'NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL'
-                nfe.infNFe.dest.IE.valor = ''
-                if self.versao == '3.10':
-                    nfe.infNFe.dest.indIEDest.valor = '2'
+                if nfe.infNFe.ide.mod.valor == 55:
+                    nfe.infNFe.dest.CNPJ.valor = '99999999000191'
+                    nfe.infNFe.dest.xNome.valor = 'NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL'
+                    nfe.infNFe.dest.IE.valor = ''
+                    if self.versao == '3.10':
+                        nfe.infNFe.dest.indIEDest.valor = '2'
+                elif nfe.infNFe.ide.mod.valor == 65:
+                    nfe.infNFe.det[0].prod.xProd.valor = 'NOTA FISCAL EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL'
 
         processo = ProcessoNFe(webservice=WS_NFE_ENVIO_LOTE, envio=envio, resposta=resposta)
 
