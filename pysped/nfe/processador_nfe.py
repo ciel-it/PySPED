@@ -277,8 +277,8 @@ class ProcessadorNFe(object):
                 else:
                     self._servidor = ws_a_usar[ambiente]['servidor']
 
-                self._url      = ws_a_usar[ambiente][servico]                
-                
+                self._url      = ws_a_usar[ambiente][servico]
+
                 if self.estado == 'RS' and servico == WS_NFE_CONSULTA_CADASTRO:
                     self._servidor = 'sef.sefaz.rs.gov.br'
                 if (self.estado == 'SC' or self.estado == 'RJ') and servico == WS_NFE_CONSULTA_CADASTRO:
@@ -501,85 +501,7 @@ class ProcessadorNFe(object):
 
     def cancelar_nota(self, ambiente=None, chave_nfe=None, numero_protocolo=None, justificativa=None):
         raise ValueError('Cancelamento agora deve ser feito via registro de eventos')
-        #if self.versao == '1.10':
-            #envio = CancNFe_107()
-            #resposta = RetCancNFe_107()
 
-        #elif self.versao == '2.00':
-            #envio = CancNFe_200()
-            #resposta = RetCancNFe_200()
-
-        #processo = ProcessoNFe(webservice=WS_NFE_CANCELAMENTO, envio=envio, resposta=resposta)
-
-        #if ambiente is None:
-            #ambiente = self.ambiente
-
-        #self.caminho = self.monta_caminho_nfe(ambiente=ambiente, chave_nfe=chave_nfe)
-
-        #envio.infCanc.tpAmb.valor = ambiente
-        #envio.infCanc.chNFe.valor = chave_nfe
-        #envio.infCanc.nProt.valor = numero_protocolo
-        #envio.infCanc.xJust.valor = justificativa
-
-        #self.certificado.assina_xmlnfe(envio)
-
-        #envio.validar()
-        #if self.salvar_arquivos:
-            #arq = open(self.caminho + unicode(envio.infCanc.chNFe.valor).strip().rjust(44, '0') + '-ped-can.xml', 'w')
-            #arq.write(envio.xml.encode('utf-8'))
-            #arq.close()
-
-        #self._conectar_servico(WS_NFE_CANCELAMENTO, envio, resposta, ambiente)
-
-        ##resposta.validar()
-
-        ##
-        ## Se for autorizado, monta o processo de cancelamento
-        ## 101 - cancelado dentro do prazo
-        ## 151 - cancelado fora do prazo
-        ##
-        #if resposta.infCanc.cStat.valor in ('101', '151'):
-            #if self.versao == '1.10':
-                #processo_cancelamento_nfe = ProcCancNFe_107()
-
-            #elif self.versao == '2.00':
-                #processo_cancelamento_nfe = ProcCancNFe_200()
-
-            #nome_arq = self.caminho + unicode(envio.infCanc.chNFe.valor).strip().rjust(44, '0') + '-proc-canc-nfe.xml'
-            #processo_cancelamento_nfe.cancNFe = envio
-            #processo_cancelamento_nfe.retCancNFe = resposta
-
-            #processo_cancelamento_nfe.validar()
-
-            #processo.processo_cancelamento_nfe = processo_cancelamento_nfe
-
-        #if self.salvar_arquivos:
-            #nome_arq = self.caminho + unicode(envio.infCanc.chNFe.valor).strip().rjust(44, '0') + '-pro-can-'
-
-            ## Cancelamento autorizado
-            #if resposta.infCanc.cStat.valor == '101':
-                #nome_arq += 'aut.xml'
-            #else:
-                #nome_arq += 'rej.xml'
-
-            #arq = open(nome_arq, 'w')
-            #arq.write(resposta.xml.encode('utf-8'))
-            #arq.close()
-
-            ## Se for autorizado, monta o processo de cancelamento
-            #if resposta.infCanc.cStat.valor == '101':
-                #nome_arq = self.caminho + unicode(envio.infCanc.chNFe.valor).strip().rjust(44, '0') + '-proc-canc-nfe.xml'
-                #arq = open(nome_arq, 'w')
-                #arq.write(processo_cancelamento_nfe.xml.encode('utf-8'))
-                #arq.close()
-
-                ## Estranhamente, o nome desse arquivo, pelo manual, deve ser chave-can.xml
-                #nome_arq = self.caminho + unicode(envio.infCanc.chNFe.valor).strip().rjust(44, '0') + '-can.xml'
-                #arq = open(nome_arq, 'w')
-                #arq.write(processo_cancelamento_nfe.xml.encode('utf-8'))
-                #arq.close()
-
-        #return processo
 
     def inutilizar_nota(self, ambiente=None, codigo_estado=None, ano=None, cnpj=None, serie=None, numero_inicial=None, numero_final=None, justificativa=None):
         if self.versao == '1.10':
@@ -1350,7 +1272,7 @@ class ProcessadorNFe(object):
     def consultar_distribuicao(self, estado=None, cnpj_cpf=None, ultimo_nsu=None, nsu=None, ambiente=None):
         envio = DistDFeInt_100()
         resposta = RetDistDFeInt_100()
-        
+
         envio.tpAmb.valor = ambiente or self.ambiente
         envio.cUFAutor.valor = UF_CODIGO[estado or self.estado]
 
@@ -1367,7 +1289,7 @@ class ProcessadorNFe(object):
         processo = ProcessoNFe(webservice=WS_DFE_DISTRIBUICAO, envio=envio, resposta=resposta)
 
         envio.validar()
-        
+
         #Monta caminhos
         if (ambiente or self.ambiente) == 1:
             self.caminho = os.path.join(self.caminho, 'producao/dfe/')
@@ -1378,7 +1300,7 @@ class ProcessadorNFe(object):
             os.makedirs(self.caminho)
         except:
             pass
-        
+
         nome_arq = self.caminho + datetime.now().strftime('%Y%m%dT%H%M%S')
         if self.salvar_arquivos:
             arq = open(nome_arq + '-cons-dist-dfe.xml', 'w')

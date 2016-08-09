@@ -3977,29 +3977,10 @@ class NFe(XMLNFe):
         chave += unicode(self.infNFe.ide.tpEmis.valor).zfill(1)
 
         #
-        # O código numério é um número aleatório
+        # O código numério é um número aleatório,
+        # o sistema que utiliza o pysped deve gerar e controlar este número
         #
-        #chave += unicode(random.randint(0, 99999999)).strip().rjust(8, '0')
-
-        #
-        # Mas, por segurança, é preferível que esse número não seja aleatório de todo
-        #
-        soma = 0
-        for c in chave:
-            soma += int(c) ** 3 ** 2
-
-        codigo = unicode(soma)
-        if len(codigo) > 8:
-            codigo = codigo[-8:]
-        else:
-            codigo = codigo.rjust(8, '0')
-
-        chave += codigo
-
-        #
-        # Define na estrutura do XML o campo cNF
-        #
-        self.infNFe.ide.cNF.valor = unicode(self.infNFe.ide.tpEmis.valor).zfill(1) + codigo
+        chave += unicode(self.infNFe.ide.cNF.valor).zfill(8)
 
         #
         # Gera o dígito verificador
