@@ -895,7 +895,7 @@ class Imposto(nfe_200.Imposto):
         xml += self.PISST.xml
         xml += self.COFINS.xml
         xml += self.COFINSST.xml
-        if self.ICMSUFDest.vBCUFDest.valor:
+        if self.ICMSUFDest.vBCUFDest.setado:
             xml += self.ICMSUFDest.xml
 
         xml += '</imposto>'

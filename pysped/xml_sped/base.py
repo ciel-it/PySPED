@@ -222,6 +222,7 @@ class TagCaracter(NohXML):
         self.namespace_obrigatorio = True
         self.alertas = []
         self.raiz = None
+        self.setado = False
 
         # Codigo para dinamizar a criacao de instancias de entidade,
         # aplicando os valores dos atributos na instanciacao
@@ -261,6 +262,7 @@ class TagCaracter(NohXML):
         return self.alertas == []
 
     def set_valor(self, novo_valor):
+        self.setado = True
         if novo_valor is not None:
             #
             # Remover caratceres inválidos
@@ -361,6 +363,7 @@ class TagBoolean(TagCaracter):
         return self.alertas == []
 
     def set_valor(self, novo_valor):
+        self.setado = True
         if isinstance(novo_valor, basestring):
             if novo_valor.lower() == 'true':
                 novo_valor = True
@@ -427,6 +430,7 @@ class TagData(TagCaracter):
         return self.alertas == []
 
     def set_valor(self, novo_valor):
+        self.setado = True
         if isinstance(novo_valor, basestring):
             if novo_valor:
                 novo_valor = datetime.strptime(novo_valor[:10], '%Y-%m-%d')
@@ -457,6 +461,7 @@ class TagData(TagCaracter):
 
 class TagHora(TagData):
     def set_valor(self, novo_valor):
+        self.setado = True
         if isinstance(novo_valor, basestring):
             if novo_valor:
                 novo_valor = datetime.strptime(novo_valor, '%H:%M:%S')
@@ -488,6 +493,7 @@ class TagHora(TagData):
 
 class TagDataHora(TagData):
     def set_valor(self, novo_valor):
+        self.setado = True
         if isinstance(novo_valor, basestring):
             if novo_valor:
                 #
@@ -551,6 +557,7 @@ class TagDataHoraUTC(TagData):
         self.fuso_horario = 'America/Sao_Paulo'
 
     def set_valor(self, novo_valor):
+        self.setado = True
         if isinstance(novo_valor, basestring):
             if self._validacao.match(novo_valor):
                 if self._valida_fuso.match(novo_valor):
@@ -662,6 +669,7 @@ class TagInteiro(TagCaracter):
             self.valor = kwargs['valor']
 
     def set_valor(self, novo_valor):
+        self.setado = True
         if isinstance(novo_valor, basestring):
             if novo_valor:
                 novo_valor = int(novo_valor)
@@ -785,6 +793,7 @@ class TagDecimal(TagCaracter):
         return self.alertas == []
 
     def set_valor(self, novo_valor):
+        self.setado = True
         if isinstance(novo_valor, basestring):
             if novo_valor:
                 novo_valor = Decimal(novo_valor)
@@ -823,6 +832,7 @@ class XMLNFe(NohXML):
     def __init__(self, *args, **kwargs):
         super(XMLNFe, self).__init__(*args, **kwargs)
         self._xml = None
+        self.setado = False
         self.alertas = []
         self.arquivo_esquema = None
         self.caminho_esquema = None
@@ -838,7 +848,7 @@ class XMLNFe(NohXML):
         # para evitar erros de conversão unicode para ascii
         xml = tira_abertura(self.xml).encode('utf-8')
 
-        esquema = etree.XMLSchema(etree.parse(arquivo_esquema)) 
+        esquema = etree.XMLSchema(etree.parse(arquivo_esquema))
         esquema.validate(etree.fromstring(xml))
 
         namespace = '{http://www.portalfiscal.inf.br/nfe}'
@@ -1003,4 +1013,3 @@ def somente_ascii(funcao):
         return unicodedata.normalize(b'NFKD', funcao(*args, **kwargs)).encode('ascii', 'ignore')
 
     return converter_para_ascii_puro
-
