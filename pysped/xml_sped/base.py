@@ -262,8 +262,8 @@ class TagCaracter(NohXML):
         return self.alertas == []
 
     def set_valor(self, novo_valor):
-        self.setado = True
         if novo_valor is not None:
+            self.setado = True
             #
             # Remover caratceres inválidos
             #
@@ -363,16 +363,18 @@ class TagBoolean(TagCaracter):
         return self.alertas == []
 
     def set_valor(self, novo_valor):
-        self.setado = True
         if isinstance(novo_valor, basestring):
             if novo_valor.lower() == 'true':
+                self.setado = True
                 novo_valor = True
             elif novo_valor.lower() == 'false':
+                self.setado = True
                 novo_valor = False
             else:
                 novo_valor = None
 
         if isinstance(novo_valor, bool) and self._valida(novo_valor):
+            self.setado = True
             self._valor_boolean = novo_valor
 
             if novo_valor == None:
@@ -430,14 +432,15 @@ class TagData(TagCaracter):
         return self.alertas == []
 
     def set_valor(self, novo_valor):
-        self.setado = True
         if isinstance(novo_valor, basestring):
             if novo_valor:
+                self.setado = True
                 novo_valor = datetime.strptime(novo_valor[:10], '%Y-%m-%d')
             else:
                 novo_valor = None
 
         if isinstance(novo_valor, (datetime, date,)) and self._valida(novo_valor):
+            self.setado = True
             self._valor_data = novo_valor
             # Cuidado!!!
             # Aqui não dá pra usar a função strftime pois em alguns
@@ -461,14 +464,15 @@ class TagData(TagCaracter):
 
 class TagHora(TagData):
     def set_valor(self, novo_valor):
-        self.setado = True
         if isinstance(novo_valor, basestring):
             if novo_valor:
+                self.setado = True
                 novo_valor = datetime.strptime(novo_valor, '%H:%M:%S')
             else:
                 novo_valor = None
 
         if isinstance(novo_valor, (datetime, time,)) and self._valida(novo_valor):
+            self.setado = True
             self._valor_data = novo_valor
             # Cuidado!!!
             # Aqui não dá pra usar a função strftime pois em alguns
@@ -493,9 +497,9 @@ class TagHora(TagData):
 
 class TagDataHora(TagData):
     def set_valor(self, novo_valor):
-        self.setado = True
         if isinstance(novo_valor, basestring):
             if novo_valor:
+                self.setado = True
                 #
                 # Força a ignorar os microssegundos enviados pelo webservice
                 # de distribuição de DF-e
@@ -508,6 +512,7 @@ class TagDataHora(TagData):
                 novo_valor = None
 
         if isinstance(novo_valor, datetime) and self._valida(novo_valor):
+            self.setado = True
             self._valor_data = novo_valor
             self._valor_data = self._valor_data.replace(microsecond=0)
             # Cuidado!!!
@@ -557,9 +562,9 @@ class TagDataHoraUTC(TagData):
         self.fuso_horario = 'America/Sao_Paulo'
 
     def set_valor(self, novo_valor):
-        self.setado = True
         if isinstance(novo_valor, basestring):
             if self._validacao.match(novo_valor):
+                self.setado = True
                 if self._valida_fuso.match(novo_valor):
                     #
                     # Extrai e determina qual o fuso horário informado
@@ -577,7 +582,7 @@ class TagDataHoraUTC(TagData):
                 novo_valor = None
 
         if isinstance(novo_valor, datetime) and self._valida(novo_valor):
-
+            self.setado = True
             if not novo_valor.tzinfo:
                 novo_valor = fuso_horario_sistema().localize(novo_valor)
                 novo_valor = pytz.UTC.normalize(novo_valor)
@@ -669,14 +674,15 @@ class TagInteiro(TagCaracter):
             self.valor = kwargs['valor']
 
     def set_valor(self, novo_valor):
-        self.setado = True
         if isinstance(novo_valor, basestring):
             if novo_valor:
+                self.setado = True
                 novo_valor = int(novo_valor)
             else:
                 novo_valor = 0
 
         if isinstance(novo_valor, (int, long, Decimal)) and self._valida(novo_valor):
+            self.setado = True
             self._valor_inteiro = novo_valor
             self._valor_string = unicode(self._valor_inteiro)
 
@@ -793,14 +799,15 @@ class TagDecimal(TagCaracter):
         return self.alertas == []
 
     def set_valor(self, novo_valor):
-        self.setado = True
         if isinstance(novo_valor, basestring):
             if novo_valor:
+                self.setado = True
                 novo_valor = Decimal(novo_valor)
             else:
                 novo_valor = Decimal('0.0')
 
         if isinstance(novo_valor, (int, long, Decimal)) and self._valida(novo_valor):
+            self.setado = True
             self._valor_decimal = Decimal(novo_valor)
             self._valor_string = self._formata(self._valor_decimal)
         else:
@@ -832,7 +839,6 @@ class XMLNFe(NohXML):
     def __init__(self, *args, **kwargs):
         super(XMLNFe, self).__init__(*args, **kwargs)
         self._xml = None
-        self.setado = False
         self.alertas = []
         self.arquivo_esquema = None
         self.caminho_esquema = None
