@@ -747,6 +747,8 @@ class ICMS(nfe_200.ICMS):
             elif self._le_noh('//det/imposto/ICMS/ICMS40') is not None:
                 self.regime_tributario = 3
                 self.CST.valor = '40'
+                # RAFAEL PETRELLA - 09-02-17 - Correção do BUG para atender faturamento MANAUS - UNICAB
+                self.vICMSDeson.raiz = '//det/imposto/ICMS/ICMS40'
             elif self._le_noh('//det/imposto/ICMS/ICMS51') is not None:
                 self.regime_tributario = 3
                 self.CST.valor = '51'
