@@ -4258,11 +4258,11 @@ class NFe(XMLNFe):
         formatado = 'RECEBEMOS DE <b>'
         formatado += self.infNFe.emit.xNome.valor.upper()
         formatado += '</b> OS PRODUTOS E/OU SERVIÇOS CONSTANTES DA <b>NOTA FISCAL ELETRÔNICA</b> INDICADA AO LADO'
-	formatado += ' EMISSÃO: <b>'
+	formatado += '<br />EMISSÃO: <b>'
 	formatado += self.infNFe.ide.dEmi.valor.strftime('%d/%m/%Y')
 	formatado += '</b> VALOR TOTAL: <b>R$ '
-	formatado += str(self.infNFe.total.ICMSTot.vNF.formato_danfe)
-	formatado += '</> DESTINATÁRIO: <b>'
+	formatado += str("%.2f" % self.infNFe.total.ICMSTot.vNF.valor).replace(',','!').replace('.',',').replace('!','.')
+	formatado += '</b> DESTINATÁRIO: <b>'
 	formatado += self.infNFe.dest.xNome.valor.upper()
 	formatado += '</b>'
 
