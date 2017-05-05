@@ -4257,13 +4257,14 @@ class NFe(XMLNFe):
     def canhoto_formatado(self):
         formatado = 'RECEBEMOS DE <b>'
         formatado += self.infNFe.emit.xNome.valor.upper()
-        formatado += '</b> OS PRODUTOS E/OU SERVIÇOS CONSTANTES DA <b>NOTA FISCAL ELETRÔNICA</b> INDICADA AO LADO<br>'
-	formatado += 'EMISSÃO: <b>'
+        formatado += '</b> OS PRODUTOS E/OU SERVIÇOS CONSTANTES DA <b>NOTA FISCAL ELETRÔNICA</b> INDICADA AO LADO'
+	formatado += ' EMISSÃO: <b>'
 	formatado += self.infNFe.ide.dEmi.valor.strftime('%d/%m/%Y')
 	formatado += '</b> VALOR TOTAL: <b>R$ '
 	formatado += str(self.infNFe.total.ICMSTot.vNF.formato_danfe)
 	formatado += '</> DESTINATÁRIO: <b>'
 	formatado += self.infNFe.dest.xNome.valor.upper()
+	formatado += '</b>'
 
         return formatado
 
