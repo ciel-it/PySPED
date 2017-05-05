@@ -4261,7 +4261,7 @@ class NFe(XMLNFe):
 	formatado += 'EMISSÃO: <b>'
 	formatado += self.infNFe.ide.dEmi.valor.strftime('%d/%m/%Y')
 	formatado += '</b> VALOR TOTAL: <b>R$ '
-	formatado += self.infNFe.total.ICMSTot.vNF.formato_danfe
+	formatado += str(self.infNFe.total.ICMSTot.vNF.formato_danfe)
 	formatado += '</> DESTINATÁRIO: <b>'
 	formatado += self.infNFe.dest.xNome.valor.upper()
 
