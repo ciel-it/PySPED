@@ -2149,6 +2149,8 @@ class Det(XMLNFe):
             formatado += '<br />'
             formatado += self.prod.uTrib.valor
 
+        return formatado
+
     def quantidade_produto_formatada(self): 
         formatado = self.prod.qCom.formato_danfe
 
@@ -2156,12 +2158,16 @@ class Det(XMLNFe):
             formatado += '<br />'
             formatado += self.prod.qTrib.formato_danfe
 
+        return formatado
+
     def valorunit_produto_formatada(self):
         formatado = self.prod.vUnCom.formato_danfe
 
         if self.prod.uTrib.valor <> self.prod.uCom.valor:
             formatado += '<br />'
             formatado += self.prod.vUnTrib.formato_danfe
+
+        return formatado
 
     def cst_formatado(self):
         formatado = unicode(self.imposto.ICMS.orig.valor).zfill(1)
