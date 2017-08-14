@@ -2152,20 +2152,20 @@ class Det(XMLNFe):
         return formatado
 
     def quantidade_produto_formatada(self): 
-        formatado = self.prod.qCom.formato_danfe
+        formatado = str(self.prod.qCom.valor)
 
         if self.prod.uTrib.valor <> self.prod.uCom.valor:
             formatado += '<br />'
-            formatado += self.prod.qTrib.formato_danfe
+            formatado += str(self.prod.qTrib.valor)
 
         return formatado
 
     def valorunit_produto_formatada(self):
-        formatado = self.prod.vUnCom.formato_danfe
+        formatado = str(self.prod.vUnCom.valor)
 
         if self.prod.uTrib.valor <> self.prod.uCom.valor:
             formatado += '<br />'
-            formatado += self.prod.vUnTrib.formato_danfe
+            formatado += str(self.prod.vUnTrib.valor)
 
         return formatado
 
