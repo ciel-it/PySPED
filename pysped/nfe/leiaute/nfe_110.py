@@ -2145,27 +2145,27 @@ class Det(XMLNFe):
     def uom_produto_formatada(self):
         formatado = self.prod.uCom.valor
 
-        if self.prod.uTrib.valor <> self.prod.uCom.valor:
-            formatado += '<br />'
-            formatado += self.prod.uTrib.valor
+        if self.prod.uTrib.valor <> self.prod.uCom.valor and
+           self.infNFe.ide.idDest.valor == '3':
+            formatado = self.prod.uTrib.valor
 
         return formatado
 
     def quantidade_produto_formatada(self): 
         formatado = str(self.prod.qCom.valor)
 
-        if self.prod.uTrib.valor <> self.prod.uCom.valor:
-            formatado += '<br />'
-            formatado += str(self.prod.qTrib.valor)
+        if self.prod.uTrib.valor <> self.prod.uCom.valor and 
+           self.infNFe.ide.idDest.valor == '3':
+            formatado = str(self.prod.qTrib.valor)
 
         return formatado
 
     def valorunit_produto_formatada(self):
         formatado = str(self.prod.vUnCom.valor)
 
-        if self.prod.uTrib.valor <> self.prod.uCom.valor:
-            formatado += '<br />'
-            formatado += str(self.prod.vUnTrib.valor)
+        if self.prod.uTrib.valor <> self.prod.uCom.valor and 
+           self.infNFe.ide.idDest.valor == '3':
+            formatado = str(self.prod.vUnTrib.valor)
 
         return formatado
 
