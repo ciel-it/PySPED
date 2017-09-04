@@ -2146,7 +2146,8 @@ class Det(XMLNFe):
         formatado = self.prod.uCom.valor
 
         if (self.prod.uTrib.valor <> self.prod.uCom.valor):
-            formatado = self.prod.uTrib.valor
+            formatado += '<br />'
+            formatado += self.prod.uTrib.valor
 
         return formatado
 
@@ -2154,7 +2155,8 @@ class Det(XMLNFe):
         formatado = str(self.prod.qCom.valor)
 
         if (self.prod.uTrib.valor <> self.prod.uCom.valor):
-            formatado = str(self.prod.qTrib.valor)
+            formatado += '<br />'
+            formatado += str(self.prod.qTrib.valor)
 
         return formatado
 
@@ -2162,7 +2164,8 @@ class Det(XMLNFe):
         formatado = str(self.prod.vUnCom.valor)
 
         if (self.prod.uTrib.valor <> self.prod.uCom.valor):
-            formatado = str(self.prod.vUnTrib.valor)
+            formatado += '<br />'
+            formatado += str(self.prod.vUnTrib.valor)
 
         return formatado
 
