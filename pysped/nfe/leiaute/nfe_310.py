@@ -617,8 +617,7 @@ class ICMS(nfe_200.ICMS):
             elif self.CST.valor == '60':
                 xml += self.vBCSTRet.xml
                 xml += self.vICMSSTRet.xml
-
-		# Ajuste para atender solicitação da WP Group
+                # Ajuste para atender solicitação da WP Group
                 xml += self.modBC.xml
                 xml += self.vBC.xml
                 xml += self.pICMS.xml
