@@ -618,6 +618,12 @@ class ICMS(nfe_200.ICMS):
                 xml += self.vBCSTRet.xml
                 xml += self.vICMSSTRet.xml
 
+		# Ajuste para atender solicitação da WP Group
+                xml += self.modBC.xml
+                xml += self.vBC.xml
+                xml += self.pICMS.xml
+                xml += self.vICMS.xml
+
             elif self.CST.valor == '70':
                 xml += self.modBC.xml
                 xml += self.vBC.xml
