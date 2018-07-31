@@ -93,7 +93,7 @@ class DetPag(XMLNFe):
     def __init__(self):
         super(DetPag, self).__init__()
         self.indPag  = TagCaracter(nome='indPag' , codigo='YA01b', tamanho=[1, 1],                         raiz='//detPag', obrigatorio=False)
-        self.tPag    = TagData(    nome='tPag'   , codigo='YA02' , tamanho=[1, 2],                         raiz='//detPag')
+        self.tPag    = TagCaracter(nome='tPag'   , codigo='YA02' , tamanho=[1, 2],                         raiz='//detPag')
         self.vPag    = TagDecimal( nome='vPag'   , codigo='YA03' , tamanho=[1, 15, 1], decimais=[0, 2, 2], raiz='//detPag')
 
     def get_xml(self):
