@@ -67,6 +67,7 @@ from webservices_flags import (UF_CODIGO,
 import webservices_1
 import webservices_2
 import webservices_3
+import webservices_4
 
 from pysped.xml_sped.certificado import Certificado
 
@@ -121,6 +122,16 @@ from leiaute import ConsStatServ_310, RetConsStatServ_310
 from leiaute import DistDFeInt_100, RetDistDFeInt_100, SOAPEnvioDistDFe_100, SOAPRetornoDistDFe_100
 
 #
+# NF-e leiaute 4.00
+#
+from leiaute import EnviNFe_400, RetEnviNFe_400
+from leiaute import ConsReciNFe_400, RetConsReciNFe_400, ProcNFe_400
+from leiaute import InutNFe_400, RetInutNFe_400, ProcInutNFe_400
+from leiaute import ConsSitNFe_400, RetConsSitNFe_400
+from leiaute import ConsStatServ_400, RetConsStatServ_400
+
+
+#
 # DANFE
 #
 from danfe import DANFE, DAEDE
@@ -133,7 +144,7 @@ class ProcessoNFe(object):
         self.resposta = resposta
 
     def __repr__(self):
-        return 'Processo: ' + webservices_3.METODO_WS[self.webservice]['metodo']
+        return 'Processo: ' + webservices_4.METODO_WS[self.webservice]['metodo']
 
     def __unicode__(self):
         return unicode(self.__repr__())
@@ -171,7 +182,7 @@ class ProcessadorNFe(object):
     def __init__(self):
         self.ambiente = 2
         self.estado = 'SP'
-        self.versao = '3.10'
+        self.versao = '4.00'
         self.certificado = Certificado()
         self.caminho = ''
         self.salvar_arquivos = True
@@ -285,6 +296,56 @@ class ProcessadorNFe(object):
                     self._servidor = 'cad.svrs.rs.gov.br'
 
                 self._url      = ws_a_usar[ambiente][servico]
+        elif self.versao == '4.00':
+            metodo_ws = webservices_4.METODO_WS
+
+            if servico == WS_DFE_DISTRIBUICAO:
+                self._soap_envio   = SOAPEnvioDistDFe_100()
+                self._soap_retorno = SOAPRetornoDistDFe_100()
+
+            else:
+                self._soap_envio   = SOAPEnvio_200()
+                self._soap_retorno = SOAPRetorno_200()
+
+            self._soap_envio.cUF = UF_CODIGO[self.estado]
+
+            if somente_ambiente_nacional:
+                self._servidor = webservices_4.AN[ambiente]['servidor']
+                self._url      = webservices_4.AN[ambiente][servico]
+                if ambiente == 1 and servico == WS_DFE_DISTRIBUICAO:
+                    self._servidor = 'www1.nfe.fazenda.gov.br'
+
+            elif servico == WS_NFE_DOWNLOAD:
+                self._servidor = webservices_4.SVAN[ambiente]['servidor']
+                self._url      = webservices_4.SVAN[ambiente][servico]
+
+            elif self.contingencia_SCAN or self.contingencia:
+                self._servidor = webservices_4.ESTADO_WS_CONTINGENCIA[ambiente]['servidor']
+                self._url      = webservices_4.ESTADO_WS_CONTINGENCIA[ambiente][servico]
+
+            else:
+                #
+                # Testa a opção de um estado, para determinado serviço, usar o WS
+                # de outro estado
+                #
+                if type(webservices_4.ESTADO_WS[self.estado][ambiente][servico]) == dict:
+                    ws_a_usar = webservices_4.ESTADO_WS[self.estado][ambiente][servico]
+                else:
+                    ws_a_usar = webservices_4.ESTADO_WS[self.estado]
+
+                if 'servidor%s' % servico in ws_a_usar[ambiente]:
+                    self._servidor = ws_a_usar[ambiente]['servidor%s' % servico]
+                else:
+                    self._servidor = ws_a_usar[ambiente]['servidor']
+
+                self._url      = ws_a_usar[ambiente][servico]
+
+                if self.estado == 'RS' and servico == WS_NFE_CONSULTA_CADASTRO:
+                    self._servidor = 'sef.sefaz.rs.gov.br'
+                if (self.estado == 'SC' or self.estado == 'RJ') and servico == WS_NFE_CONSULTA_CADASTRO:
+                    self._servidor = 'cad.svrs.rs.gov.br'
+
+                self._url      = ws_a_usar[ambiente][servico]
 
         self._soap_envio.webservice = metodo_ws[servico]['webservice']
         self._soap_envio.metodo     = metodo_ws[servico]['metodo']
@@ -383,6 +444,10 @@ class ProcessadorNFe(object):
             envio = EnviNFe_310()
             resposta = RetEnviNFe_310()
 
+        elif self.versao == '4.00':
+            envio = EnviNFe_400()
+            resposta = RetEnviNFe_400()
+
         if self.ambiente == 2: # Homologação tem detalhes especificos desde a NT2011_002
             for nfe in lista_nfes:
                 nfe.infNFe.dest.xNome.valor = 'NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL'
@@ -445,6 +510,10 @@ class ProcessadorNFe(object):
         elif self.versao == '3.10':
             envio = ConsReciNFe_310()
             resposta = RetConsReciNFe_310()
+
+        elif self.versao == '4.00':
+            envio = ConsReciNFe_400()
+            resposta = RetConsReciNFe_400()
 
         processo = ProcessoNFe(webservice=WS_NFE_CONSULTA_RECIBO, envio=envio, resposta=resposta)
 
@@ -516,6 +585,10 @@ class ProcessadorNFe(object):
             envio = InutNFe_310()
             resposta = RetInutNFe_310()
 
+        elif self.versao == '4.00':
+            envio = InutNFe_400()
+            resposta = RetInutNFe_400()
+
         processo = ProcessoNFe(webservice=WS_NFE_INUTILIZACAO, envio=envio, resposta=resposta)
 
         if ambiente is None:
@@ -566,6 +639,9 @@ class ProcessadorNFe(object):
             elif self.versao == '3.10':
                 processo_inutilizacao_nfe = ProcInutNFe_310()
 
+            elif self.versao == '4.00':
+                processo_inutilizacao_nfe = ProcInutNFe_400()
+
             processo_inutilizacao_nfe.inutNFe = envio
             processo_inutilizacao_nfe.retInutNFe = resposta
 
@@ -614,6 +690,10 @@ class ProcessadorNFe(object):
             envio = ConsSitNFe_310()
             resposta = RetConsSitNFe_310()
 
+        elif self.versao == '4.00':
+            envio = ConsSitNFe_400()
+            resposta = RetConsSitNFe_400()
+
         processo = ProcessoNFe(webservice=WS_NFE_CONSULTA, envio=envio, resposta=resposta)
 
         if ambiente is None:
@@ -661,6 +741,10 @@ class ProcessadorNFe(object):
         elif self.versao == '3.10':
             envio = ConsStatServ_310()
             resposta = RetConsStatServ_310()
+
+        elif self.versao == '4.00':
+            envio = ConsStatServ_400()
+            resposta = RetConsStatServ_400()
 
         processo = ProcessoNFe(webservice=WS_NFE_SITUACAO, envio=envio, resposta=resposta)
 
@@ -733,7 +817,7 @@ class ProcessadorNFe(object):
             if (
                  ((self.versao == '1.10') and (proc_consulta.resposta.infProt.cStat.valor in ('217', '999',)))
                  or
-                ((self.versao in ['2.00', '3.10']) and (proc_consulta.resposta.cStat.valor in ('100', '150', '110', '301', '302')))
+                ((self.versao in ['2.00', '3.10','4.00']) and (proc_consulta.resposta.cStat.valor in ('100', '150', '110', '301', '302')))
              ):
                 #
                 # Interrompe todo o processo
@@ -841,6 +925,9 @@ class ProcessadorNFe(object):
 
             elif self.versao == '3.10':
                 processo = ProcNFe_310()
+
+            elif self.versao == '4.00':
+                processo = ProcNFe_400()
 
             processo.NFe     = nfe
             processo.protNFe = protnfe_recibo
@@ -1231,6 +1318,10 @@ class ProcessadorNFe(object):
             resposta = RetConsCad_200()
 
         elif self.versao == '3.10':
+            envio = ConsCad_200()
+            resposta = RetConsCad_200()
+
+        elif self.versao == '4.00':
             envio = ConsCad_200()
             resposta = RetConsCad_200()
 

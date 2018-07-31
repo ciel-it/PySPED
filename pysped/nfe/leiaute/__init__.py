@@ -328,3 +328,65 @@ from distdfeint_100 import DistDFeInt as DistDFeInt_100
 from distdfeint_100 import RetDistDFeInt as RetDistDFeInt_100
 from distdfeint_100 import SOAPEnvio as SOAPEnvioDistDFe_100
 from distdfeint_100 import SOAPRetorno as SOAPRetornoDistDFe_100
+
+#
+# Versão 4.00, usada a partir de agosto/2018 para a NF-e
+#
+ESQUEMA_ATUAL_VERSAO_5 = 'pl_009v4'
+
+#
+# Emissão de NFC-e
+#
+from nfce_400 import NFCe as NFCe_400
+
+#
+# Emissão de NF-e
+#
+from nfe_400 import NFe as NFe_400
+from nfe_400 import NFRef as NFRef_400
+from nfe_400 import Det as Det_400
+from nfe_400 import DI as DI_400
+from nfe_400 import Adi as Adi_400
+from nfe_400 import Med as Med_400
+from nfe_400 import Arma as Arma_400
+from nfe_400 import Reboque as Reboque_400
+from nfe_400 import Vol as Vol_400
+from nfe_400 import Lacres as Lacres_400
+from nfe_400 import Dup as Dup_400
+from nfe_400 import ObsCont as ObsCont_400
+from nfe_400 import ObsFisco as ObsFisco_400
+from nfe_400 import ProcRef as ProcRef_400
+from nfe_400 import AutXML as AutXML_400
+
+#
+# Envio de lote de NF-e
+#
+from envinfe_400 import EnviNFe as EnviNFe_400
+from envinfe_400 import RetEnviNFe as RetEnviNFe_400
+
+#
+# Consulta do recibo do lote de NF-e
+#
+from consrecinfe_400 import ConsReciNFe as ConsReciNFe_400
+from consrecinfe_400 import RetConsReciNFe as RetConsReciNFe_400
+from consrecinfe_400 import ProtNFe as ProtNFe_400
+from consrecinfe_400 import ProcNFe as ProcNFe_400
+
+#
+# Inutilização de NF-e
+#
+from inutnfe_400 import InutNFe as InutNFe_400
+from inutnfe_400 import RetInutNFe as RetInutNFe_400
+from inutnfe_400 import ProcInutNFe as ProcInutNFe_400
+
+#
+# Consulta a situação de NF-e
+#
+from conssitnfe_400 import ConsSitNFe as ConsSitNFe_400
+from conssitnfe_400 import RetConsSitNFe as RetConsSitNFe_400
+
+#
+# Consulta a situação do serviço
+#
+from consstatserv_400 import ConsStatServ as ConsStatServ_400
+from consstatserv_400 import RetConsStatServ as RetConsStatServ_400

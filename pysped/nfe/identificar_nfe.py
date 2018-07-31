@@ -184,6 +184,7 @@ def valida_assinatura(xml, arq_xml, tipo):
     if tipo not in ('NFe_110', 'CancNFe_107', 'InutNFe_107', 'ProcNFe_110', 'EnviNFe_110',
                     'NFe_200', 'CancNFe_200', 'InutNFe_200', 'ProcNFe_200', 'EnviNFe_200',
                     'NFe_310', 'InutNFe_310', 'ProcNFe_310', 'EnviNFe_310',
+                    'NFe_400', 'InutNFe_400', 'ProcNFe_400', 'EnviNFe_400',
                     'CTe_104', 'CancCTe_104', 'InutCTe_104', 'ProcCTe_104', 'EnviCTe_104',
                     'Evento_100', 'EnvEvento_100', 'ProcEvento_100',
                     'EventoCCe_100', 'EnvEventoCCe_100', 'ProcEventoCCe_100',
