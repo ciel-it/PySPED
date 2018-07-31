@@ -1550,7 +1550,7 @@ class ICMSTot(nfe_200.ICMSTot):
             self.vFCPUFDest.xml   = arquivo
             self.vICMSUFDest.xml  = arquivo
             self.vICMSUFRemet.xml = arquivo
-            self.vFCP = arquivo
+            self.vFCP.xml    = arquivo
             self.vBCST.xml   = arquivo
             self.vST.xml     = arquivo
             self.vFCPST.xml  = arquivo
