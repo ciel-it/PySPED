@@ -89,12 +89,68 @@ class Exporta(XMLNFe):
 
     txt = property(get_txt)
 
+class DetPag(XMLNFe):
+    def __init__(self):
+        super(DetPag, self).__init__()
+        self.indPag  = TagCaracter(nome='indPag' , codigo='YA01b', tamanho=[1, 1],                         raiz='//detPag', obrigatorio=False)
+        self.tPag    = TagData(    nome='tPag'   , codigo='YA02' , tamanho=[1, 2],                         raiz='//detPag')
+        self.vPag    = TagDecimal( nome='vPag'   , codigo='YA03' , tamanho=[1, 15, 1], decimais=[0, 2, 2], raiz='//detPag')
+
+    def get_xml(self):
+        if not (self.tPag.valor or self.vPag.valor):
+            return ''
+
+        xml = XMLNFe.get_xml(self)
+        xml += '<detPag>'
+        xml += self.indPag.xml
+        xml += self.tPag.xml
+        xml += self.vPag.xml
+        xml += '</detPag>'
+        return xml
+
+    def set_xml(self, arquivo):
+        if self._le_xml(arquivo):
+            self.indPag.xml  = arquivo
+            self.tPag.xml = arquivo
+            self.vPag.xml  = arquivo
+
+    xml = property(get_xml, set_xml)
+
+class Pag400(XMLNFe):
+    def __init__(self):
+        super(Pag400, self).__init__()
+        self.detPag = []
+
+    def get_xml(self):
+        if not len(self.detPag):
+            return ''
+
+        xml = XMLNFe.get_xml(self)
+        xml += '<pag>'
+
+        for d in self.detPag:
+            xml += d.xml
+
+        xml += '</pag>'
+        return xml
+
+    def set_xml(self, arquivo):
+        if self._le_xml(arquivo):
+            #
+            # Técnica para leitura de tags múltiplas
+            # As classes dessas tags, e suas filhas, devem ser
+            # "reenraizadas" (propriedade raiz) para poderem ser
+            # lidas corretamente
+            #
+            self.detPag = self.le_grupo('//NFe/infNFe/pag/detPag', DetPag)
+
+    xml = property(get_xml, set_xml)
 
 class InfNFe(nfe_200.InfNFe):
     def __init__(self):
         super(InfNFe, self).__init__()
         self.exporta  = Exporta()
-
+        self.pag400  = Pag400()
 
 class Deduc(nfe_200.Deduc):
     def __init__(self):
