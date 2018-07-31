@@ -353,7 +353,7 @@ from nfe_400 import Reboque as Reboque_400
 from nfe_400 import Vol as Vol_400
 from nfe_400 import Lacres as Lacres_400
 from nfe_400 import Dup as Dup_400
-from nfe_400 import detPag as detPag_400
+from nfe_400 import DetPag as detPag_400
 from nfe_400 import ObsCont as ObsCont_400
 from nfe_400 import ObsFisco as ObsFisco_400
 from nfe_400 import ProcRef as ProcRef_400
