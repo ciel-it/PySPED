@@ -116,9 +116,9 @@ class DetPag(XMLNFe):
 
     xml = property(get_xml, set_xml)
 
-class Pag400(XMLNFe):
+class Pag(XMLNFe):
     def __init__(self):
-        super(Pag400, self).__init__()
+        super(Pag, self).__init__()
         self.detPag = []
 
     def get_xml(self):
@@ -150,7 +150,7 @@ class InfNFe(nfe_200.InfNFe):
     def __init__(self):
         super(InfNFe, self).__init__()
         self.exporta  = Exporta()
-        self.pag400  = Pag400()
+        self.pag  = Pag()
 
 class Deduc(nfe_200.Deduc):
     def __init__(self):
@@ -1356,35 +1356,35 @@ class Card(XMLNFe):
     xml = property(get_xml, set_xml)
 
 
-class Pag(XMLNFe):
-    def __init__(self):
-        super(Pag, self).__init__()
-        self.tPag = TagCaracter(nome='tPag', codigo='YA01', tamanho=[2, 2, 2], raiz='//pag')
-        self.vPag = TagDecimal(nome='vPag' , codigo='YA02', tamanho=[1, 15, 1], decimais=[0, 2, 2], raiz='//pag')
-        self.card = Card()
+#class Pag(XMLNFe):
+#    def __init__(self):
+#        super(Pag, self).__init__()
+#        self.tPag = TagCaracter(nome='tPag', codigo='YA01', tamanho=[2, 2, 2], raiz='//pag')
+#        self.vPag = TagDecimal(nome='vPag' , codigo='YA02', tamanho=[1, 15, 1], decimais=[0, 2, 2], raiz='//pag')
+#        self.card = Card()
 
-    def get_xml(self):
-        if not (self.tPag.valor or self.vPag.valor or self.card.xml):
-            return ''
+#    def get_xml(self):
+#        if not (self.tPag.valor or self.vPag.valor or self.card.xml):
+#            return ''
 
-        #
-        # Define as tags baseado no código da situação tributária
-        #
-        xml = XMLNFe.get_xml(self)
-        xml += '<pag>'
-        xml += self.tPag.xml
-        xml += self.vPag.xml
-        xml += self.card.xml
-        xml += '</pag>'
-        return xml
+#        #
+#        # Define as tags baseado no código da situação tributária
+#        #
+#        xml = XMLNFe.get_xml(self)
+#        xml += '<pag>'
+#        xml += self.tPag.xml
+#        xml += self.vPag.xml
+#        xml += self.card.xml
+#        xml += '</pag>'
+#        return xml
 
-    def set_xml(self, arquivo):
-        if self._le_xml(arquivo):
-            self.tPag.xml = arquivo
-            self.vPag.xml = arquivo
-            self.cad.xml  = arquivo
+#    def set_xml(self, arquivo):
+#        if self._le_xml(arquivo):
+#            self.tPag.xml = arquivo
+#            self.vPag.xml = arquivo
+#            self.cad.xml  = arquivo
 
-    xml = property(get_xml, set_xml)
+#    xml = property(get_xml, set_xml)
 
 
 class Dup(nfe_200.Dup):
@@ -1908,7 +1908,7 @@ class InfNFe(nfe_200.InfNFe):
         self.total    = Total()
         self.transp   = Transp()
         self.cobr     = Cobr()
-        self.pag = []
+        self.pag      = Pag()
         self.infAdic  = InfAdic()
         self.exporta  = Exporta()
         self.compra   = Compra()
@@ -1934,10 +1934,11 @@ class InfNFe(nfe_200.InfNFe):
         xml += self.total.xml
         xml += self.transp.xml
         xml += self.cobr.xml
+        xml += self.pag.xml
 
-        if self.ide.mod.valor == '65':
-            for p in self.pag:
-                xml += p.xml
+        #if self.ide.mod.valor == '65':
+        #    for p in self.pag:
+        #        xml += p.xml
 
         xml += self.infAdic.xml
         xml += self.exporta.xml
@@ -1973,7 +1974,7 @@ class InfNFe(nfe_200.InfNFe):
             self.transp.xml   = arquivo
             self.cobr.xml     = arquivo
 
-            self.pag = self.le_grupo('//NFe/infNFe/pag', Pag)
+            self.pag.xml      = arquivo # self.le_grupo('//NFe/infNFe/pag', Pag)
 
             self.infAdic.xml  = arquivo
             self.exporta.xml  = arquivo
