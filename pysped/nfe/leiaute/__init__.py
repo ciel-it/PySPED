@@ -332,7 +332,7 @@ from distdfeint_100 import SOAPRetorno as SOAPRetornoDistDFe_100
 #
 # Versão 4.00, usada a partir de agosto/2018 para a NF-e
 #
-ESQUEMA_ATUAL_VERSAO_5 = 'pl_009v4'
+ESQUEMA_ATUAL_VERSAO_4 = 'pl_009v4'
 
 #
 # Emissão de NFC-e
