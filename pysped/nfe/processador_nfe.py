@@ -129,7 +129,7 @@ from leiaute import ConsReciNFe_400, RetConsReciNFe_400, ProcNFe_400
 from leiaute import InutNFe_400, RetInutNFe_400, ProcInutNFe_400
 from leiaute import ConsSitNFe_400, RetConsSitNFe_400
 from leiaute import ConsStatServ_400, RetConsStatServ_400
-
+from leiaute import ConsCad_400, RetConsCad_400
 
 #
 # DANFE
@@ -176,8 +176,8 @@ class ConexaoHTTPS(HTTPSConnection):
             self.sock = sock
             self._tunnel()
         self.sock = ssl.wrap_socket(sock, self.key_file, self.cert_file,
-                                    # ssl_version=ssl.PROTOCOL_SSLv23,
-                                    ssl_version=ssl.PROTOCOL_TLSv1_2,
+                                    ssl_version=ssl.PROTOCOL_SSLv23,
+                                    # ssl_version=ssl.PROTOCOL_TLSv1_2,
                                     do_handshake_on_connect=False)
 
 
@@ -1325,8 +1325,8 @@ class ProcessadorNFe(object):
             resposta = RetConsCad_200()
 
         elif self.versao == '4.00':
-            envio = ConsCad_200()
-            resposta = RetConsCad_200()
+            envio = ConsCad_400()
+            resposta = RetConsCad_400()
 
         processo = ProcessoNFe(webservice=WS_NFE_CONSULTA_CADASTRO, envio=envio, resposta=resposta)
 

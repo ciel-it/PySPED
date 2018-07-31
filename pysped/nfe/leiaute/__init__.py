@@ -391,3 +391,9 @@ from conssitnfe_400 import RetConsSitNFe as RetConsSitNFe_400
 #
 from consstatserv_400 import ConsStatServ as ConsStatServ_400
 from consstatserv_400 import RetConsStatServ as RetConsStatServ_400
+
+#
+# Consulta cadastro
+#
+from conscad_400 import ConsCad as ConsCad_400
+from conscad_400 import RetConsCad as RetConsCad_400

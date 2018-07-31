@@ -79,8 +79,8 @@ METODO_WS = {
         'metodo'    : 'nfeStatusServicoNF2',
     },
     WS_NFE_CONSULTA_CADASTRO: {
-        'webservice': 'CadConsultaCadastro2',
-        'metodo'    : 'consultaCadastro2',
+        'webservice': 'CadConsultaCadastro4',
+        'metodo'    : 'consultaCadastro4',
     },
     WS_NFE_RECEPCAO_EVENTO: {
         'webservice': 'RecepcaoEvento',
