@@ -43,6 +43,7 @@ from __future__ import division, print_function, unicode_literals
 
 from pysped.xml_sped import *
 from pysped.nfe.leiaute import ESQUEMA_ATUAL_VERSAO_4 as ESQUEMA_ATUAL
+from pysped.nfe.leiaute import nfe_310
 from pysped.nfe.leiaute import nfe_400
 import os
 
