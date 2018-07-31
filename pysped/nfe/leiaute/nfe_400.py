@@ -1505,9 +1505,13 @@ class ICMSTot(nfe_200.ICMSTot):
     def __init__(self):
         super(ICMSTot, self).__init__()
         self.vICMSDeson = TagDecimal(nome='vICMSDeson', codigo='W04a', tamanho=[1, 15, 1], decimais=[1,  2,  2], raiz='//NFe/infNFe/total/ICMSTot')
-        self.vFCPUFDest = TagDecimal(nome='vFCPUFDest', codigo='W04b', tamanho=[1, 15, 1], decimais=[1,  2,  2], raiz='//NFe/infNFe/total/ICMSTot', obrigatorio=False)
-        self.vICMSUFDest = TagDecimal(nome='vICMSUFDest', codigo='W04c', tamanho=[1, 15, 1], decimais=[1,  2,  2], raiz='//NFe/infNFe/total/ICMSTot', obrigatorio=False)
-        self.vICMSUFRemet = TagDecimal(nome='vICMSUFRemet', codigo='W04d', tamanho=[1, 15, 1], decimais=[1,  2,  2], raiz='//NFe/infNFe/total/ICMSTot', obrigatorio=False)
+        self.vFCPUFDest = TagDecimal(nome='vFCPUFDest', codigo='W04c', tamanho=[1, 15, 1], decimais=[1,  2,  2], raiz='//NFe/infNFe/total/ICMSTot', obrigatorio=False)
+        self.vICMSUFDest = TagDecimal(nome='vICMSUFDest', codigo='W04e', tamanho=[1, 15, 1], decimais=[1,  2,  2], raiz='//NFe/infNFe/total/ICMSTot', obrigatorio=False)
+        self.vICMSUFRemet = TagDecimal(nome='vICMSUFRemet', codigo='W04g', tamanho=[1, 15, 1], decimais=[1,  2,  2], raiz='//NFe/infNFe/total/ICMSTot', obrigatorio=False)
+        self.vFCP = TagDecimal(nome='vFCP', codigo='W04h', tamanho=[1, 15, 1], decimais=[1,  2,  2], raiz='//NFe/infNFe/total/ICMSTot')
+        self.vFCPST = TagDecimal(nome='vFCPST', codigo='W06a', tamanho=[1, 15, 1], decimais=[1,  2,  2], raiz='//NFe/infNFe/total/ICMSTot')
+        self.vFCPSTRet = TagDecimal(nome='vFCPSTRet', codigo='W06b', tamanho=[1, 15, 1], decimais=[1,  2,  2], raiz='//NFe/infNFe/total/ICMSTot')
+        self.vIPIDevol = TagDecimal(nome='vIPIDevol', codigo='W12a', tamanho=[1, 15, 1], decimais=[1,  2,  2], raiz='//NFe/infNFe/total/ICMSTot')
 
     def get_xml(self):
         xml = XMLNFe.get_xml(self)
@@ -1518,14 +1522,18 @@ class ICMSTot(nfe_200.ICMSTot):
         xml += self.vFCPUFDest.xml
         xml += self.vICMSUFDest.xml
         xml += self.vICMSUFRemet.xml
+        xml += self.vFCP.xml
         xml += self.vBCST.xml
         xml += self.vST.xml
+        xml += self.vFCPST.xml
+        xml += self.vFCPSTRet.xml
         xml += self.vProd.xml
         xml += self.vFrete.xml
         xml += self.vSeg.xml
         xml += self.vDesc.xml
         xml += self.vII.xml
         xml += self.vIPI.xml
+        xml += self.vIPIDevol.xml
         xml += self.vPIS.xml
         xml += self.vCOFINS.xml
         xml += self.vOutro.xml
@@ -1542,14 +1550,18 @@ class ICMSTot(nfe_200.ICMSTot):
             self.vFCPUFDest.xml   = arquivo
             self.vICMSUFDest.xml  = arquivo
             self.vICMSUFRemet.xml = arquivo
+            self.vFCP = arquivo
             self.vBCST.xml   = arquivo
             self.vST.xml     = arquivo
+            self.vFCPST.xml  = arquivo
+            self.vFCPSTRet.xml = arquivo
             self.vProd.xml   = arquivo
             self.vFrete.xml  = arquivo
             self.vSeg.xml    = arquivo
             self.vDesc.xml   = arquivo
             self.vII.xml     = arquivo
             self.vIPI.xml    = arquivo
+            self.vIPIDevol.xml = arquivo
             self.vPIS.xml    = arquivo
             self.vCOFINS.xml = arquivo
             self.vOutro.xml  = arquivo
@@ -1742,7 +1754,7 @@ class Ide(nfe_200.Ide):
         xml += self.cUF.xml
         xml += self.cNF.xml
         xml += self.natOp.xml
-        xml += self.indPag.xml
+        #xml += self.indPag.xml
         xml += self.mod.xml
         xml += self.serie.xml
         xml += self.nNF.xml
@@ -1784,7 +1796,7 @@ class Ide(nfe_200.Ide):
             self.cUF.xml     = arquivo
             self.cNF.xml     = arquivo
             self.natOp.xml   = arquivo
-            self.indPag.xml  = arquivo
+            #self.indPag.xml  = arquivo
             self.mod.xml     = arquivo
             self.serie.xml   = arquivo
             self.nNF.xml     = arquivo
