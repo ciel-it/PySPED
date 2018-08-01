@@ -59,31 +59,31 @@ from .webservices_flags import (NFE_AMBIENTE_PRODUCAO,
 
 METODO_WS = {
     WS_NFE_AUTORIZACAO: {
-        'webservice': 'NfeAutorizacao',
-        'metodo'    : 'NfeAutorizacao',
+        'webservice': 'NFeAutorizacao4',
+        'metodo'    : 'nfeAutorizacaoLote',
     },
     WS_NFE_CONSULTA_AUTORIZACAO: {
-        'webservice': 'NfeRetAutorizacao',
-        'metodo'    : 'NfeRetAutorizacao',
+        'webservice': 'NFeRetAutorizacao4',
+        'metodo'    : 'nfeRetAutorizacaoLote',
     },
     WS_NFE_INUTILIZACAO: {
-        'webservice': 'NfeInutilizacao2',
-        'metodo'    : 'nfeInutilizacaoNF2',
+        'webservice': 'NFeInutilizacao4',
+        'metodo'    : 'nfeInutilizacaoNF',
     },
     WS_NFE_CONSULTA: {
-        'webservice': 'NfeConsulta2',
-        'metodo'    : 'nfeConsultaNF2',
+        'webservice': 'NFeConsultaProtocolo4',
+        'metodo'    : 'nfeConsultaNF',
     },
     WS_NFE_SITUACAO: {
-        'webservice': 'NfeStatusServico2',
-        'metodo'    : 'nfeStatusServicoNF2',
+        'webservice': 'NFeStatusServico4',
+        'metodo'    : 'nfeStatusServicoNF',
     },
     WS_NFE_CONSULTA_CADASTRO: {
         'webservice': 'CadConsultaCadastro4',
-        'metodo'    : 'consultaCadastro4',
+        'metodo'    : 'consultaCadastro',
     },
     WS_NFE_RECEPCAO_EVENTO: {
-        'webservice': 'RecepcaoEvento',
+        'webservice': 'NFeRecepcaoEvento4',
         'metodo'    : 'nfeRecepcaoEvento',
     },
     WS_NFE_DOWNLOAD: {
