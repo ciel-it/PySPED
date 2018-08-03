@@ -278,6 +278,7 @@ class TagCSOSN(TagCaracter):
         self.grupo_icms.pICMSST.obrigatorio     = False
         self.grupo_icms.vICMSST.obrigatorio     = False
         self.grupo_icms.vBCSTRet.obrigatorio    = False
+        self.grupo_icms.pST.obrigatorio         = False
         self.grupo_icms.vICMSSTRet.obrigatorio  = False
         self.grupo_icms.pCredSN.obrigatorio     = False
         self.grupo_icms.vCredICMSSN.obrigatorio = False
@@ -299,6 +300,7 @@ class TagCSOSN(TagCaracter):
         self.grupo_icms.pICMSST.valor     = '0.00'
         self.grupo_icms.vICMSST.valor     = '0.00'
         self.grupo_icms.vBCSTRet.valor    = '0.00'
+        self.grupo_icms.pST.valor         = '0.00'
         self.grupo_icms.vICMSSTRet.valor  = '0.00'
         self.grupo_icms.pCredSN.valor     = '0.00'
         self.grupo_icms.vCredICMSSN.valor = '0.00'
@@ -544,6 +546,7 @@ class TagCSTICMS(nfe_110.TagCSTICMS):
             self.grupo_icms.nome_tag_txt = 'N08'
             self.grupo_icms.raiz_tag = '//det/imposto/ICMS/ICMS60'
             self.grupo_icms.vBCSTRet.obrigatorio   = True
+            self.grupo_icms.pST.obrigatorio        = True
             self.grupo_icms.vICMSSTRet.obrigatorio = True
 
         elif self.valor == '70':
@@ -599,6 +602,7 @@ class TagCSTICMS(nfe_110.TagCSTICMS):
         self.grupo_icms.vICMSST.raiz     = self.grupo_icms.raiz_tag
         self.grupo_icms.motDesICMS.raiz  = self.grupo_icms.raiz_tag
         self.grupo_icms.vBCSTRet.raiz    = self.grupo_icms.raiz_tag
+        self.grupo_icms.pST.raiz         = self.grupo_icms.raiz_tag
         self.grupo_icms.vICMSSTRet.raiz  = self.grupo_icms.raiz_tag
         self.grupo_icms.vBCSTDest.raiz   = self.grupo_icms.raiz_tag
         self.grupo_icms.vICMSSTDest.raiz = self.grupo_icms.raiz_tag
@@ -632,6 +636,7 @@ class ICMS(nfe_110.ICMS):
         self.UFST        = TagCaracter(nome='UFST'      , codigo='N24', tamanho=[2,  2]                       , raiz='')
         self.pBCOp       = TagDecimal(nome='pBCOp'      , codigo='N25', tamanho=[1,  5, 1], decimais=[0, 2, 2], raiz='')
         self.vBCSTRet    = TagDecimal(nome='vBCSTRet'   , codigo='N26', tamanho=[1, 15, 1], decimais=[0, 2, 2], raiz='')
+        self.pST         = TagDecimal(nome='pST'        , codigo='N26a',tamanho=[1, 15, 1], decimais=[0, 2, 2], raiz='')
         self.vICMSSTRet  = TagDecimal(nome='vICMSSTRet' , codigo='N27', tamanho=[1, 15, 1], decimais=[0, 2, 2], raiz='')
         self.motDesICMS  = TagInteiro(nome='motDesICMS' , codigo='N28', tamanho=[1, 1]                        , raiz='')
         self.pCredSN     = TagDecimal(nome='pCredSN'    , codigo='N29', tamanho=[1, 15, 1], decimais=[0, 2, 2], raiz='')
@@ -748,6 +753,7 @@ class ICMS(nfe_110.ICMS):
 
             elif self.CST.valor == '60':
                 xml += self.vBCSTRet.xml
+                xml += self.pST.xml
                 xml += self.vICMSSTRet.xml
 
             elif self.CST.valor == '70':
@@ -938,6 +944,7 @@ class ICMS(nfe_110.ICMS):
             self.pICMSST.xml    = arquivo
             self.vICMSST.xml    = arquivo
             self.vBCSTRet.xml   = arquivo
+            self.pST.xml        = arquivo
             self.vICMSSTRet.xml = arquivo
 
             if self.regime_tributario == 1:
