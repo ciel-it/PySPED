@@ -1035,9 +1035,9 @@ class VeicProd(nfe_200.VeicProd):
 class ExportInd(XMLNFe):
     def __init__(self):
         super(ExportInd, self).__init__()
-        self.nRE = TagInteiro(nome='nRE', codigo='I53', tamanho=[1, 12], raiz='//detExport/exportInd', obrigatorio=False)
-        self.chNFe = TagCaracter(nome='chNFe', codigo='I54', tamanho=[44, 44], raiz='//detExport/exportInd', obrigatorio=False)
-        self.qExport = TagDecimal(nome='qExport', codigo='I55', tamanho=[1, 12, 1], decimais=[0, 2, 4], raiz='//detExport/exportInd', obrigatorio=False)
+        self.nRE = TagInteiro(nome='nRE', codigo='I53', tamanho=[1, 12], raiz='//detExport/exportInd', obrigatorio=True)
+        self.chNFe = TagCaracter(nome='chNFe', codigo='I54', tamanho=[44, 44], raiz='//detExport/exportInd', obrigatorio=True)
+        self.qExport = TagDecimal(nome='qExport', codigo='I55', tamanho=[1, 12, 1], decimais=[0, 4, 4], raiz='//detExport/exportInd', obrigatorio=True)
 
     def get_xml(self):
         xml = XMLNFe.get_xml(self)
