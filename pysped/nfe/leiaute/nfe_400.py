@@ -759,9 +759,10 @@ class ICMS(nfe_200.ICMS):
                 xml += self.pICMSST.xml
                 xml += self.vICMSST.xml
 
-            elif self.CSOSN.valor == '500':
-                xml += self.vBCSTRet.xml
-                xml += self.vICMSSTRet.xml
+            # Rafael Petrella - 04/04/2019 - A pedido do Megacare
+            #elif self.CSOSN.valor == '500':
+            #    xml += self.vBCSTRet.xml
+            #    xml += self.vICMSSTRet.xml
 
             elif self.CSOSN.valor == '900':
                 xml += self.modBC.xml
@@ -871,9 +872,9 @@ class ICMS(nfe_200.ICMS):
             self.vBCST.xml      = arquivo
             self.pICMSST.xml    = arquivo
             self.vICMSST.xml    = arquivo
-            self.vBCSTRet.xml   = arquivo
+            #self.vBCSTRet.xml   = arquivo
             self.pST.xml        = arquivo
-            self.vICMSSTRet.xml = arquivo
+            #self.vICMSSTRet.xml = arquivo
             self.vICMSDeson.xml = arquivo
             self.vICMSOp.xml    = arquivo
             self.pDif.xml       = arquivo
