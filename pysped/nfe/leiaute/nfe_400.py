@@ -1947,6 +1947,7 @@ class InfNFe(nfe_200.InfNFe):
         xml += self.exporta.xml
         xml += self.compra.xml
         xml += self.cana.xml
+        xml += '<infRespTec><CNPJ>28653792000112</CNPJ><xContato>Rafael Petrella</xContato><email>suporte@ciel-it.com</email><fone>1141340475</fone></infRespTec>'
         xml += '</infNFe>'
         return xml
 
